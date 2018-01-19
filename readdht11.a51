@@ -1,3 +1,6 @@
+#ifndef     __READDHT11_A51__
+#define     __READDHT11_A51__
+
 $NOMOD51
 $INCLUDE (.\include\AT89x52.H)
 $INCLUDE (.\include\definitions.h)
@@ -146,4 +149,5 @@ loopbit:        MOV     A,DHT_PORT          //mérés
                 RET
 notvalid:       CLR     C
                 RET        
-                END 
+                END
+#endif                    
