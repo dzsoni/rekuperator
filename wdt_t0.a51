@@ -1,3 +1,6 @@
+#ifndef     __WDT_T0_A51__
+#define     __WDT_T0_A51__
+
 $NOMOD51
 $INCLUDE (.\include\AT89x52.H)
 $INCLUDE (.\include\definitions.h)
@@ -57,4 +60,5 @@ wdtt0_off:
                 CLR     TR0         //Timer0 stop
                 CLR     ET0         //T0 interrupt disable
                 RET
-                END 
+                END
+#endif
