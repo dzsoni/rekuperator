@@ -1,3 +1,5 @@
+#ifndef     __START_A51__
+#define     __START_A51__
 $NOMOD51
 $INCLUDE (.\include\AT89x52.H)
 $INCLUDE (.\include\definitions.h)      
@@ -121,3 +123,4 @@ label8:
                 
 INFLOOP:        JMP     INFLOOP         //infinity loop (SJMP INFLOOP)
                 END
+#endif
