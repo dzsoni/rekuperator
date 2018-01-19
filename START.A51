@@ -119,7 +119,7 @@ label6:         CALL    wdtt0_ini
 label7:         SETB    KI_FAN_VALIDVAL 
 label8:
                 CALL    wdtt0_off
-                CLR     EA
+                CLR     EA              //global interrupt stop
                 
 INFLOOP:        JMP     INFLOOP         //infinity loop (SJMP INFLOOP)
                 END
