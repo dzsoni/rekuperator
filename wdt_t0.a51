@@ -18,7 +18,6 @@ WDT_TO_OFF      SEGMENT   CODE
 /*                       wdtt0_int                                        *
 /*                  Watch Dog Timer_T0- interrupt rutin                   *
 **************************************************************************/
-
                 RSEG    WDT_T0_CODE
                 USING   1
 wdtt0_int:
