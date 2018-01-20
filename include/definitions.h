@@ -25,7 +25,7 @@ X18=18000/0.6=30000  biztonsági ráhagyással 34000 (~20.4ms)
 A bit '0' ha 50us-nál kisebb,'1' ha 50us-nál nagyobb idot mértünk
 50us=50/0.6~=83
 ...................................*/
-        BIT_TIME    EQU 83 
+        BIT_TIME    EQU 83d 
 
 //-------------------------------------------------------------------------                             
 #endif
