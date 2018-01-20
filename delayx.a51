@@ -9,35 +9,40 @@ $INCLUDE (.\include\definitions.h)
                 PUBLIC  delayx10ms
                 PUBLIC  delayx20ms
 //-------------------------------------------------------------------------
-                NAME    DELAY
+                NAME    DELAYX
                     
-DELAYX1MS_CODE  SEGMENT   CODE
-DELAYX10MS_CODE SEGMENT   CODE
-DELAYX20MS_CODE SEGMENT   CODE
+DELAYX_CODE  SEGMENT   CODE
 /**************************************************************************
 /*                       delayx1ms                                        *
 /*                  delay x*1ms subrutin                                  *
+/*R6=LOW x                                                                *
+/*R7=HIGH x                                                               *
 **************************************************************************/
-                RSEG    DELAYX1MS_CODE
+                RSEG    DELAYX_CODE
                 USING   0
 delayx1ms:
-
+                
                 RET
 /**************************************************************************
 /*                       delayx10ms                                       *
 /*                  delay x*10ms subrutin                                 *
 **************************************************************************/
-                RSEG    DELAYX10MS_CODE
-                USING   0
 delayx10ms:
                 RET
 /**************************************************************************
 /*                       delayx10ms                                       *
 /*                  delay x*20ms subrutin                                 *
 **************************************************************************/
-                RSEG    DELAYX20MS_CODE
-                USING   0
 delayx20ms:
                 RET
-                
+
+/**************************************************************************
+/*                       delayxcommon                                     *
+/*                  delayx common part                                    *
+**************************************************************************/
+delayxcom:
+                RET
+
+
+                END
 #endif
