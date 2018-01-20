@@ -1,10 +1,25 @@
 #ifndef     __LCD_INI_A51__
 #define     __LCD_INI_A51__
 
-/*;----------LCD init-----------------
-                                    ;{
-_lcdinit   code
-lcdinit
+$NOMOD51
+$INCLUDE (.\include\AT89x52.H)
+$INCLUDE (.\include\definitions.h)
+//-------------------------------------------------------------------------
+                PUBLIC  lcd_ini
+
+//-------------------------------------------------------------------------
+                NAME    LCD_INI
+                    
+LCD_INI_CODE    SEGMENT   CODE
+
+/**************************************************************************
+/*                       lcd_ini                                          *
+/*                  Lcd inicialization                                    *
+**************************************************************************/
+                RSEG    LCD_INI_CODE
+                USING   0   
+lcd_ini:
+
       banksel     LCD_DATA_TRIS
       bcf         LCD_DATA_TRIS,LCD_DB4
       bcf         LCD_DATA_TRIS,LCD_DB5
