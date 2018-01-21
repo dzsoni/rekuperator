@@ -38,9 +38,9 @@ wdtt0_int:
 wdtt0_ini:
                 CLR     TR0         //Timer0 stop
                 MOV     A,TMOD
-                ANL     A,#T1_MASK_
+                ANL     A,#T1_MASK_ //T1 -et nem bántjuk
                 ORL     A,#T0_M0_   //Gate0=0,C/T0=0,M10=0,M00=1
-                MOV     TMOD,A
+                MOV     TMOD,A      //16bites számláló 
                 
                 MOV     TH0,0       //Számláló törlése
                 MOV     TL0,0
