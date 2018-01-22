@@ -36,8 +36,8 @@ readdht11:
                 //Timer2 output disable,  up/down counter disable
                 MOV     T2MOD,#00H
                 
-                MOV     TH2,#HIGH(0FFFFH - X18)
-                MOV     TL2,#LOW (0FFFFH - X18)
+                MOV     TH2,#HIGH((0FFFFH - X18)+1)
+                MOV     TL2,#LOW ((0FFFFH - X18)+1)
                 
                 CLR     TF2                 //Clear Timer2 overflow flag
                 CLR     ET2                 //Disable T2 interrupt

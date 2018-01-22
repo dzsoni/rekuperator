@@ -11,6 +11,13 @@ $INCLUDE (.\include\definitions.h)
                 EXTRN   CODE(wdtt0_int)
                 EXTRN   CODE(wdtt0_ini)
                 EXTRN   CODE(wdtt0_off)
+                EXTRN   CODE(delayx120us_ini)
+                EXTRN   CODE(delayx120us_int)    
+                EXTRN   CODE(delayx120us_off)
+                EXTRN   DATA(DBYTE0)
+                EXTRN   DATA(DBYTE1)
+                EXTRN   DATA(DBYTE2)
+                EXTRN   DATA(DBYTE3)        
 //-------------------------------------------------------------------------
 //                Kód és adat szegmensek definiálása
 //-------------------------------------------------------------------------
@@ -59,12 +66,15 @@ KI_FAN_VALIDVAL BIT             INS_VALIDVAL+3
 //--------------------------------------------------------------------------
 //              RESET VEKTOR   
 //--------------------------------------------------------------------------
-                CSEG    AT      0               //program  start pont
+                CSEG    AT      0H             //program  start pont
 
 STARTUP:        LJMP    STARTUP1
 //...........Timer0 interrupt vector
                 CSEG    AT      0bH
 T0IE_VECT:      LJMP    wdtt0_int
+//...........Timer1 interrupt vector
+                CSEG    AT      1bH
+T1IE_VECT:      LJMP    delayx120us_int
 //--------------------------------------------------------------------------
                 RSEG    C_C51STARTUP
                 USING   0
@@ -80,7 +90,17 @@ STARTUP1:       MOV     SP,#STACK-1 //Stack pointer beállítasa
                 CLR     BE_FAN_VALIDVAL
                 CLR     KI_FAN_VALIDVAL
                 
+                //wait-> 1s=8333.333*120us~=8334
+                //8334dec=0000208Eh
                 SETB    EA
+                MOV     DBYTE0,#8Eh
+                MOV     DBYTE1,#20h
+                MOV     DBYTE2,#00h
+                MOV     DBYTE3,#00h
+                CALL    delayx120us_ini
+loop1:          JB      TR1,loop1       //wait 1s             
+ //........................               
+readdhts:                
                 CALL    wdtt0_ini 
                 
                                         //Read BENT_DHT
@@ -119,8 +139,15 @@ label6:         CALL    wdtt0_ini
 label7:         SETB    KI_FAN_VALIDVAL 
 label8:
                 CALL    wdtt0_off
-                CLR     EA              //global interrupt stop
                 
-INFLOOP:        JMP     INFLOOP         //infinity loop (SJMP INFLOOP)
+                //wait-> 5s=41666.66667*120us~=41667
+                //41667dec=0000A2C3h
+                MOV     DBYTE0,#0C3h
+                MOV     DBYTE1,#0A2h
+                MOV     DBYTE2,#00h
+                MOV     DBYTE3,#00h
+                CALL    delayx120us_ini
+loop2:          JB      TR1,loop2       //wait 5s         
+                JMP     readdhts
                 END
 #endif

@@ -380,9 +380,9 @@
               <FilePath>.\wdt_t0.a51</FilePath>
             </File>
             <File>
-              <FileName>lcd_ini.a51</FileName>
+              <FileName>delayx.a51</FileName>
               <FileType>2</FileType>
-              <FilePath>.\lcd_ini.a51</FilePath>
+              <FilePath>.\delayx.a51</FilePath>
             </File>
             <File>
               <FileName>lcd_busy.a51</FileName>
