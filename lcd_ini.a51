@@ -58,6 +58,8 @@ loop2:          JB      TR1,loop2
                 
                 MOV     LCD_PORT,00111000b     //8bit , 2lines, 5x8 font 
                 CALL    lcd_busy
+                
+                
       /*      
       fcall            lcdclear           ; clear display
 
