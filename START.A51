@@ -84,11 +84,6 @@ STARTUP1:       MOV     SP,#STACK-1 //Stack pointer beállítasa
 
                 CLR     RS0             //Select Bank0
                 CLR     RS1
-                                
-                CLR     INS_VALIDVAL    //nem érvényes adatok a belso szenzortól
-                CLR     OUT_VALIDVAL    //nem érvényes adatok a külso szenzortól
-                CLR     BE_FAN_VALIDVAL
-                CLR     KI_FAN_VALIDVAL
                 
                 //wait-> 1s=8333.333*120us~=8334
                 //8334dec=0000208Eh
@@ -98,9 +93,14 @@ STARTUP1:       MOV     SP,#STACK-1 //Stack pointer beállítasa
                 MOV     DBYTE2,#00h
                 MOV     DBYTE3,#00h
                 CALL    delayx120us_ini
-loop1:          JB      TR1,loop1       //wait 1s             
- //........................               
-readdhts:                
+loop1:          JB      TR1,loop1       //wait 1s 
+                
+readdhts:                 
+                CLR     INS_VALIDVAL    //nem érvényes adatok a belso szenzortól
+                CLR     OUT_VALIDVAL    //nem érvényes adatok a külso szenzortól
+                CLR     BE_FAN_VALIDVAL
+                CLR     KI_FAN_VALIDVAL
+                               
                 CALL    wdtt0_ini 
                 
                                         //Read BENT_DHT
@@ -140,14 +140,107 @@ label7:         SETB    KI_FAN_VALIDVAL
 label8:
                 CALL    wdtt0_off
                 
-                //wait-> 5s=41666.66667*120us~=41667
+//-------------------------------------------------------------                
+                //Érvényes-e a benti DHT adata?
+                JB INS_VALIDVAL,hom1 
+                //nem érvényes
+ventoff:        CLR     FANS
+                JMP     wait5s
+venton:         SETB    FANS                
+wait5s:         //wait-> 5s=41666.66667*120us~=41667
                 //41667dec=0000A2C3h
                 MOV     DBYTE0,#0C3h
                 MOV     DBYTE1,#0A2h
                 MOV     DBYTE2,#00h
                 MOV     DBYTE3,#00h
                 CALL    delayx120us_ini
-loop2:          JB      TR1,loop2       //wait 5s         
+                JMP     readdhts     
+                
+hom1:           // érvényes DHT adat
+                //Benti homérséklet >=20?
+                MOV     A,#19d
+                CJNE    A,INS_T_HI,hom2
+                JMP     ventoff             //=19
+hom2:           //!= 19        
+                JNC     ventoff             //<19
+                //.........................
+                //DHT jó, >=20 fok
+                //páratartalom >=60%?
+                MOV     A,#59d
+                CJNE    A,INS_H_HI,para1
+                JMP     para2               //=59%
+para1:          //!=59%
+                JNC     para2               //<59
+                //>=60% (A állapot)
+                JMP     venton
+                //.........................
+para2:          //<60%
+                MOV     A,#49d
+                CJNE    A,INS_H_HI,para4
+                JMP     para4              //=49%
+                //!=49%
+                JNC     para4              //<49
+para3:          SETB    FANS 
+                //>=50% és <60% (B állapot)
+                //wait-> 15min=7500000*120us
+                //7500000dec=007270E0h
+                MOV     DBYTE0,#0E0h
+                MOV     DBYTE1,#70h
+                MOV     DBYTE2,#72h
+                MOV     DBYTE3,#00h
+                CALL    delayx120us_ini
+                CLR     FANS
+                //wait-> 15min=7500000*120us
+                //7500000dec=007270E0h
+                MOV     DBYTE0,#0E0h
+                MOV     DBYTE1,#70h
+                MOV     DBYTE2,#72h
+                MOV     DBYTE3,#00h
+                CALL    delayx120us_ini
+                JMP     readdhts
+                //........................
+para4:          //<50%
+                MOV     A,#39d
+                CJNE    A,INS_H_HI,para5
+                JMP     para6               //=39%
+                //!=39%
+para5:          JNC     para6               //<39
+                //>=40% és <50% (C állapot)
+                SETB     FANS
+                //wait-> 15min=7500000*120us
+                //7500000dec=007270E0h
+                MOV     DBYTE0,#0E0h
+                MOV     DBYTE1,#70h
+                MOV     DBYTE2,#72h
+                MOV     DBYTE3,#00h
+                CALL    delayx120us_ini
+                CLR     FANS
+                //wait-> 20min=10000000*120us
+                //10000000dec=00989680h
+                MOV     DBYTE0,#80h
+                MOV     DBYTE1,#96h
+                MOV     DBYTE2,#98h
+                MOV     DBYTE3,#00h
+                CALL    delayx120us_ini
+                JMP     readdhts
+                //........................            
+para6:          //<40%     (D állapot)
+                SETB     FANS
+                //wait-> 15min=7500000*120us
+                //7500000dec=007270E0h
+                MOV     DBYTE0,#0E0h
+                MOV     DBYTE1,#70h
+                MOV     DBYTE2,#72h
+                MOV     DBYTE3,#00h
+                CALL    delayx120us_ini
+                CLR     FANS
+                //wait-> 30min=15000000*120us
+                //15000000dec=00E4E1C0h
+                MOV     DBYTE0,#0C0h
+                MOV     DBYTE1,#0E1h
+                MOV     DBYTE2,#0E4h
+                MOV     DBYTE3,#00h
+                CALL    delayx120us_ini
                 JMP     readdhts
                 END
 #endif

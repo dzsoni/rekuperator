@@ -132,7 +132,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGDP51</Key>
-          <Name>(98=732,116,1065,397,1)(82=-1,-1,-1,-1,0)(83=-1,-1,-1,-1,0)(84=-1,-1,-1,-1,0)(85=1029,7,1227,109,0)(3003=-1,-1,-1,-1,0)(91=1062,159,1262,421,0)(92=1066,118,1266,380,1)(94=1036,531,1261,773,0)(5023=-1,-1,-1,-1,0)</Name>
+          <Name>(98=732,116,1065,397,0)(82=-1,-1,-1,-1,0)(83=-1,-1,-1,-1,0)(84=-1,-1,-1,-1,0)(85=1029,7,1227,109,0)(3003=-1,-1,-1,-1,0)(91=1062,159,1262,421,0)(92=1066,118,1266,380,0)(94=1036,531,1261,773,0)(5023=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -157,7 +157,7 @@
         <Mm>
           <WinNumber>1</WinNumber>
           <SubType>0</SubType>
-          <ItemText>i:0x00</ItemText>
+          <ItemText>i:0x20</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow1>
@@ -224,7 +224,7 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>1</FileNumber>
       <FileType>2</FileType>
-      <tvExp>0</tvExp>
+      <tvExp>1</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>.\START.A51</PathWithFileName>
@@ -277,6 +277,18 @@
       <bDave2>0</bDave2>
       <PathWithFileName>.\lcd_busy.a51</PathWithFileName>
       <FilenameWithoutPath>lcd_busy.a51</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>6</FileNumber>
+      <FileType>2</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\lcd_ini.a51</PathWithFileName>
+      <FilenameWithoutPath>lcd_ini.a51</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
