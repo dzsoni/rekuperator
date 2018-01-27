@@ -11,7 +11,7 @@ KINT_DHT        EQU     BENT_DHT+1  //KINTI DHT11
 BE_FAN_DHT      EQU     BENT_DHT+2  //DHT a BE ventillátornál
 KI_FAN_DHT      EQU     BENT_DHT+3  //DHT a KI ventillátornál
 
-LCD_DATA_P      EQU     P2          //LCD DATA PORT
+LCD_PORT        EQU     P2          //LCD DATA PORT
 LCD_DB0         EQU     P2_0
 LCD_DB1         EQU     P2_1
 LCD_DB2         EQU     P2_2
