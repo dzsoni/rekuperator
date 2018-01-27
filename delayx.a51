@@ -67,16 +67,16 @@ delayx120us_ini:
 out3:
                 MOV     R0,#DBYTE0
                 DEC     DBYTE0
-                CJNE    @R0,#0FFH,out
+                CJNE    @R0,#0FFH,out4
                 DEC     DBYTE1
                 INC     R0
-                CJNE    @R0,#0FFH,out
+                CJNE    @R0,#0FFH,out4
                 DEC     DBYTE2
                 INC     R0
-                CJNE    @R0,#0FFH,out
+                CJNE    @R0,#0FFH,out4
                 DEC     DBYTE3
                 
-                
+out4:               
                 CLR     TF1         //T1 overflow clear
                 SETB    ET1         //T1 interrupt enable
                 SETB    TR1         //Run T1

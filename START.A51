@@ -94,7 +94,7 @@ STARTUP1:       MOV     SP,#STACK-1 //Stack pointer beállítasa
                 MOV     DBYTE3,#00h
                 CALL    delayx120us_ini
 loop1:          JB      TR1,loop1       //wait 1s 
-                
+                CLR     FANS            //venti off
 readdhts:                 
                 CLR     INS_VALIDVAL    //nem érvényes adatok a belso szenzortól
                 CLR     OUT_VALIDVAL    //nem érvényes adatok a külso szenzortól

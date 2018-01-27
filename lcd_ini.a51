@@ -7,6 +7,7 @@ $INCLUDE (.\include\definitions.h)
 //-------------------------------------------------------------------------
                 PUBLIC  lcd_ini
                 EXTRN   CODE(delayx120us_ini)
+                EXTRN   CODE(lcd_busy)
                 EXTRN   DATA(DBYTE0)
                 EXTRN   DATA(DBYTE1)
                 EXTRN   DATA(DBYTE2)
@@ -28,7 +29,7 @@ lcd_ini:
                 CLR     LCD_E                //E disable
       
                 //-----set to 8 bit interface-----------
-                MOV     LCD_DATA_P,00110000b //8bit interface 
+                MOV     LCD_PORT,00110000b //8bit interface 
                 SETB    LCD_E
                 NOP
                 CLR     LCD_E
@@ -55,9 +56,9 @@ loop2:          JB      TR1,loop2
                 NOP
                 CLR     LCD_E    
                 
-                MOV     LCD_DATA_P,00111100b        // disp.on, 2 lines 
-                /*lcdbusy
-            
+                MOV     LCD_PORT,00111000b     //8bit , 2lines, 5x8 font 
+                CALL    lcd_busy
+      /*      
       fcall            lcdclear           ; clear display
 
       movlw            b'00000110'        ; INCREMENT, no entire shift
