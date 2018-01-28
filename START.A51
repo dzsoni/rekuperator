@@ -14,6 +14,9 @@ $INCLUDE (.\include\definitions.h)
                 EXTRN   CODE(delayx120us_ini)
                 EXTRN   CODE(delayx120us_int)    
                 EXTRN   CODE(delayx120us_off)
+                EXTRN   CODE(bintobcd)
+                EXTRN   CODE(lcdini)
+                EXTRN   CODE(prDHTtoLCD)
                 EXTRN   DATA(DBYTE0)
                 EXTRN   DATA(DBYTE1)
                 EXTRN   DATA(DBYTE2)
@@ -29,7 +32,7 @@ VARS            SEGMENT   DATA
 FLAGS           SEGMENT   DATA BITADDRESSABLE
 //...........................................
                 RSEG            STACK
-                DS      16      //STACK mérete
+                DS              24      //STACK mérete
 //...
                 RSEG            VARS
 INS_H_HI:       DS              1       //Inside humidity integer
@@ -81,10 +84,9 @@ T1IE_VECT:      LJMP    delayx120us_int
 
 STARTUP1:       MOV     SP,#STACK-1 //Stack pointer beállítasa
 
-
-                CLR     RS0             //Select Bank0
+                CLR     RS0         //Select Bank0
                 CLR     RS1
-                
+                CLR     FANS       //venti off
                 //wait-> 1s=8333.333*120us~=8334
                 //8334dec=0000208Eh
                 SETB    EA
@@ -94,7 +96,8 @@ STARTUP1:       MOV     SP,#STACK-1 //Stack pointer beállítasa
                 MOV     DBYTE3,#00h
                 CALL    delayx120us_ini
 loop1:          JB      TR1,loop1       //wait 1s 
-                CLR     FANS            //venti off
+                CALL    lcdini
+                
 readdhts:                 
                 CLR     INS_VALIDVAL    //nem érvényes adatok a belso szenzortól
                 CLR     OUT_VALIDVAL    //nem érvényes adatok a külso szenzortól
@@ -139,14 +142,15 @@ label6:         CALL    wdtt0_ini
 label7:         SETB    KI_FAN_VALIDVAL 
 label8:
                 CALL    wdtt0_off
-                
+                CALL    prDHTtoLCD
 //-------------------------------------------------------------                
                 //Érvényes-e a benti DHT adata?
                 JB INS_VALIDVAL,hom1 
                 //nem érvényes
 ventoff:        CLR     FANS
                 JMP     wait5s
-venton:         SETB    FANS                
+venton:         SETB    FANS
+
 wait5s:         //wait-> 5s=41666.66667*120us~=41667
                 //41667dec=0000A2C3h
                 MOV     DBYTE0,#0C3h
@@ -180,7 +184,8 @@ para2:          //<60%
                 JMP     para4              //=49%
                 //!=49%
                 JNC     para4              //<49
-para3:          SETB    FANS 
+para3:          SETB    FANS
+
                 //>=50% és <60% (B állapot)
                 //wait-> 15min=7500000*120us
                 //7500000dec=007270E0h
@@ -190,6 +195,7 @@ para3:          SETB    FANS
                 MOV     DBYTE3,#00h
                 CALL    delayx120us_ini
                 CLR     FANS
+                
                 //wait-> 15min=7500000*120us
                 //7500000dec=007270E0h
                 MOV     DBYTE0,#0E0h

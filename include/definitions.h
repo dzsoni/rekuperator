@@ -27,7 +27,9 @@ LCD_RW          EQU     P1_1        //LCD Read/Write control line
 LCD_E           EQU     P1_2        //LCD Enable control line
 
 FANS            EQU     P1_3        //Fans
-
+//--------------------------------------------------------------------------
+LCD_LINE0	      EQU	    080h		    //LCD 0th Line Address (lehet 00h)
+LCD_LINE1	      EQU	    0c0h		    //LCD 1st Line Address (lehet 40h)
 /*--------------18 ms ot eloallító konstansérték---------------------------
 Ha FOSC= 20000000 (20MHz),akkor 0.6 us-on ként lép a számláló
 1/(FOSC/12)=0.6us 

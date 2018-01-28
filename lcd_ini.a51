@@ -5,9 +5,15 @@ $NOMOD51
 $INCLUDE (.\include\AT89x52.H)
 $INCLUDE (.\include\definitions.h)
 //-------------------------------------------------------------------------
-                PUBLIC  lcd_ini
+                PUBLIC  lcdini
                 EXTRN   CODE(delayx120us_ini)
-                EXTRN   CODE(lcd_busy)
+                EXTRN   CODE(lcdbusy)
+                EXTRN   CODE(lcdputcmd)
+                EXTRN   CODE(lcdputchar)
+                EXTRN   CODE(lcdclear)
+                EXTRN   CODE(lcdhome)
+                EXTRN   CODE(lcdscga)
+                EXTRN   CODE(homero)
                 EXTRN   DATA(DBYTE0)
                 EXTRN   DATA(DBYTE1)
                 EXTRN   DATA(DBYTE2)
@@ -23,7 +29,7 @@ LCD_INI_CODE    SEGMENT   CODE
 **************************************************************************/
                 RSEG    LCD_INI_CODE
                 USING   0   
-lcd_ini:            
+lcdini:            
                 CLR     LCD_RS               //instruction
                 CLR     LCD_RW               //write
                 CLR     LCD_E                //E disable
@@ -57,15 +63,28 @@ loop2:          JB      TR1,loop2
                 CLR     LCD_E    
                 
                 MOV     LCD_PORT,00111000b     //8bit , 2lines, 5x8 font 
-                CALL    lcd_busy
-      /*      
-      fcall            lcdclear           ; clear display
-
-      movlw            b'00000110'        ; INCREMENT, no entire shift
-      fcall            lcdputcmd
-
-      fcall            lcdhome
-       return                              ;}
-       */
+                call    lcdbusy
+                MOV     A,#00h                 //Display off
+                CALL    lcdputcmd
+                CALL    lcdclear               //Display clear
+                MOV     A,00000110b            //INCREMENT, no entire shift
+                CALL    lcdputcmd
+                CALL    lcdhome
+                MOV     A,#08H                  //disp on, Cursor, off, no blink
+                CALL    lcdputcmd
+           
+             //--------Upload custom chars to CGRAM---------
+                MOV     A,#00h                  //Char adddress= 00H
+                CALL    lcdscga
+                MOV     DPTR,#homero
+                CLR     A
+                MOV     R2,A
+                
+loop3:          MOVC    A,@A+DPTR
+                CALL    lcdputchar
+                INC     R2
+                MOV     A,R2
+                CJNE    A,#8,loop3
+                RET
         END
 #endif

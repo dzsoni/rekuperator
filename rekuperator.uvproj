@@ -394,6 +394,56 @@
               <FileType>2</FileType>
               <FilePath>.\lcd_ini.a51</FilePath>
             </File>
+            <File>
+              <FileName>lcd_putcmd.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\lcd_putcmd.a51</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_clear.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\lcd_clear.a51</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_home.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\lcd_home.a51</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_putchar.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\lcd_putchar.a51</FilePath>
+            </File>
+            <File>
+              <FileName>bintoBCD.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\bintoBCD.a51</FilePath>
+            </File>
+            <File>
+              <FileName>bintoLCD.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\bintoLCD.a51</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_customchar.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\lcd_customchar.a51</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_scga.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\lcd_scga.a51</FilePath>
+            </File>
+            <File>
+              <FileName>prDHTtoLCD.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\prDHTtoLCD.a51</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_sdda.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\lcd_sdda.a51</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
