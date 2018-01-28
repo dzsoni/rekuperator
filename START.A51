@@ -142,7 +142,7 @@ label6:         CALL    wdtt0_ini
 label7:         SETB    KI_FAN_VALIDVAL 
 label8:
                 CALL    wdtt0_off
-                CALL    prDHTtoLCD
+                CALL    prDHTtoLCD      //print DHT-s to LCD
 //-------------------------------------------------------------                
                 //Érvényes-e a benti DHT adata?
                 JB INS_VALIDVAL,hom1 
