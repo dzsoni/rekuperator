@@ -38,6 +38,9 @@ lcdini:
                 MOV     LCD_PORT,00110000b //8bit interface 
                 SETB    LCD_E
                 NOP
+                NOP
+                NOP
+                NOP
                 CLR     LCD_E
                 //hold LCD_DATA >5ms
                 //5ms=41.6667*120us~=42
@@ -52,6 +55,9 @@ loop1:          JB      TR1,loop1                   //wait 5ms
 
                 SETB    LCD_E
                 NOP
+                NOP
+                NOP
+                NOP
                 CLR     LCD_E
                 
                 MOV     DBYTE0,#2Ah
@@ -59,6 +65,9 @@ loop1:          JB      TR1,loop1                   //wait 5ms
 loop2:          JB      TR1,loop2                
 
                 SETB    LCD_E
+                NOP
+                NOP
+                NOP
                 NOP
                 CLR     LCD_E    
                 
